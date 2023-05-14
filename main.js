@@ -50,7 +50,18 @@ function addToCart(productName, price, imageUrl) {
     subCart.appendChild(somAff);
     cart.appendChild(subCart);
     var elem=document.querySelectorAll("#prix");
-
+    //remove product function
+    dltButton.addEventListener('click', function() {
+        subCart.remove();
+        addedProducts = addedProducts.filter(function(product) {
+            return product !== productName;
+        });
+        updatePrice(mo);
+    });
+    
+    heartButton.addEventListener('click', function() {
+        heartButton.style.color = 'red';
+    });
 }
 
 
@@ -111,5 +122,6 @@ function myEvent(event){
     else if (btn[1] === targett) {
         btn[1].addEventListener("click", increment(event))
     }
+    
 }
 
