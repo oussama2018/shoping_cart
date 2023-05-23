@@ -1,6 +1,9 @@
 var i=0;
 var number=0;
 var addedProducts = [];
+var cart = document.getElementById("cart");
+var Totalprice=cart.querySelector('h1')
+
 function addToCart(productName, price, imageUrl) {
     var number =0;
     if (addedProducts.includes(productName)) {
@@ -10,7 +13,6 @@ function addToCart(productName, price, imageUrl) {
     
 
     addedProducts.push(productName);
-    var cart = document.getElementById("cart");
     var subCart = document.createElement("subCart");
     var numberProd = document.createElement("p");
     var cartItem = document.createElement("div");
@@ -22,14 +24,20 @@ function addToCart(productName, price, imageUrl) {
     var heartButton =document.createElement('button');
     var somAff = document.createElement("p");
     numberProd.setAttribute("id", "numberProd");
+    numberProd.setAttribute("class", "numberProd");
     cartItem.setAttribute("id", "Div1");
     priceItem.setAttribute("id", "prix");
+    priceItem.setAttribute("class", "prix");
     minButton.setAttribute("id", "min");
     plusButton.setAttribute("id", "plus");
     dltButton.setAttribute("id", "delete");
     heartButton.setAttribute("id", "heart");
     somAff.setAttribute("id", "sum");
+    somAff.setAttribute("class", "sumClass")
 
+
+
+    var product = document.getElementsByClassName('numberProd')
     numberProd.innerText ='1';
     productImage.src = imageUrl;
     cartItem.innerText = productName;
@@ -56,12 +64,15 @@ function addToCart(productName, price, imageUrl) {
         addedProducts = addedProducts.filter(function(product) {
             return product !== productName;
         });
-        updatePrice(mo);
+        updatePrice();
     });
     
     heartButton.addEventListener('click', function() {
         heartButton.style.color = 'red';
     });
+
+    updatePrice();
+    
 }
 
 
@@ -74,7 +85,7 @@ function decrement(event){
         counter =1;
     }
     getCounter.innerHTML = counter;
-    updatePrice(mo);
+    updatePrice();
 }
 
 function increment(event){
@@ -83,26 +94,42 @@ function increment(event){
     var counter = Number(getCounter.innerText);
     counter++;
     getCounter.innerHTML = counter;
-    updatePrice(mo);
+    updatePrice();
 }
 
-function updatePrice(mo) {
-    var priceEl = mo.querySelector('#prix');
-    var quantityEl = mo.querySelector('p');
-    var subTotalEl = mo.querySelector('#sum');
-    var price = parseFloat(priceEl.innerText);
-    var quantity = parseInt(quantityEl.innerText);
-    var subTotal = price * quantity;
-    subTotalEl.innerText = subTotal;
+function updatePrice() {
+    var product = document.getElementsByClassName('numberProd')
+
+    var getSumm = document.getElementsByClassName('prix')
+   console.log(getSumm)
+   var final_sum=0;
+    for (i=0;  i<getSumm.length; i++)
+    {
+        var somTotal =Number(getSumm[i].innerText);
+        console.log(somTotal)
+        var numProduct = Number(product[i].innerText)
+        console.log(numProduct)
+        final_sum=final_sum+(somTotal*numProduct)
+        console.log(final_sum)
+
+
+        
+    }
+    console.log(final_sum)
+Totalprice.innerText="Total Price:"+final_sum
+
+
+
+    // somEl.innerText =
     
     // recalculate the total price
-    var subTotals = document.querySelectorAll('#sum');
-    var totalPrice = 0;
-    for (var i = 0; i < subTotals.length; i++) {
-        totalPrice += parseFloat(subTotals[i].innerText);
-    }
-    var totalPriceEl = document.querySelector('#totalPrice');
-    totalPriceEl.innerText = totalPrice;
+    // var subTotals = document.querySelectorAll('#sum');
+    // var totalPrice = 0;
+    // for (var i = 0; i < subTotals.length; i++) {
+    //     totalPrice += parseFloat(subTotals[i].innerText);
+    // }
+    // var totalPriceEl = document.querySelector('#totalPrice');
+    // totalPriceEl.innerText = totalPrice;
 }
 
 
